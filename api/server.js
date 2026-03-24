@@ -13,7 +13,7 @@ const path = require('path');
 const crypto = require('crypto');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'visitors.db');
 
 // ── Middleware ──────────────────────────────────────────────────────────────
@@ -348,6 +348,10 @@ app.get('*', (req, res) => {
 });
 
 // ── Start Server ──────────────────────────────────────────────────────────────
+if (!PORT) {
+  console.error("PORT not defined!");
+  process.exit(1);
+}
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🚀 Jampot Technologies server running`);
   console.log(`Server running on port ${PORT}`);
