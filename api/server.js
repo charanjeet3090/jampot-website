@@ -348,7 +348,7 @@ app.get('*', (req, res) => {
 });
 
 // ── Start Server ──────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🚀 Jampot Technologies server running`);
   console.log(`   Website:   http://localhost:${PORT}`);
   console.log(`   Dashboard: http://localhost:${PORT}/dashboard`);
