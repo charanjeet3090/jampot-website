@@ -13,7 +13,7 @@ const path = require('path');
 const crypto = require('crypto');
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'visitors.db');
 
 // ── Middleware ──────────────────────────────────────────────────────────────
@@ -354,7 +354,7 @@ if (!PORT) {
 }
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🚀 Jampot Technologies server running`);
-  console.log(`Server running on port ${PORT}`);
+  console.log("ENV PORT:", process.env.PORT);
   console.log(`   Dashboard: http://localhost:${PORT}/dashboard`);
   console.log(`   Database:  ${DB_PATH}\n`);
 });
