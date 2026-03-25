@@ -352,9 +352,37 @@ if (!PORT) {
   console.error("PORT not defined!");
   process.exit(1);
 }
-app.listen(PORT, '0.0.0.0', () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🚀 Jampot Technologies server running`);
   console.log("ENV PORT:", process.env.PORT);
   console.log(`   Dashboard: http://localhost:${PORT}/dashboard`);
   console.log(`   Database:  ${DB_PATH}\n`);
 });
+
+// ── Graceful Shutdown ─────────────────────────────────────────────────────────
+function shutdown(signal) {
+  console.log(`\n${signal} received — shutting down gracefully…`);
+
+  // Stop accepting new connections and wait for in-flight requests to finish.
+  // A 10-second hard timeout prevents the process from hanging indefinitely.
+  const forceExit = setTimeout(() => {
+    console.error('Shutdown timeout exceeded — forcing exit.');
+    process.exit(1);
+  }, 10_000);
+  forceExit.unref(); // Don't let this timer keep the event loop alive on its own.
+
+  server.close(() => {
+    console.log('HTTP server closed.');
+    try {
+      db.close();
+      console.log('Database connection closed.');
+    } catch (e) {
+      console.error('Error closing database:', e.message);
+    }
+    clearTimeout(forceExit);
+    process.exit(0);
+  });
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT',  () => shutdown('SIGINT'));
