@@ -284,6 +284,7 @@ a{color:inherit;text-decoration:none}
 
 <script>
 /* ── State ── */
+const API_BASE_URL = 'https://jampot-website-production.up.railway.app';
 let currentDays = 7;
 let leadsData = [];
 let autoRefreshTimer;
@@ -490,7 +491,7 @@ function renderLeads(rows, tbodyId='leadsTbody', maxRows=200) {
 /* ── Toggle Contact ── */
 async function toggleContact(id, newVal, btn) {
   try {
-    await fetch(`/api/dashboard/leads/${id}`, {
+    await fetch(`${API_BASE_URL}/api/dashboard/leads/${id}`, {
       method:'PATCH',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ contacted: newVal, notes: '' }),
@@ -519,12 +520,12 @@ function exportLeads() {
 async function loadAll() {
   try {
     const [overview, daily, pages, referrers, leads, sessions] = await Promise.all([
-      fetch(`/api/dashboard/overview?days=${currentDays}`).then(r=>r.json()),
-      fetch(`/api/dashboard/daily?days=${currentDays}`).then(r=>r.json()),
-      fetch(`/api/dashboard/pages?days=${currentDays}`).then(r=>r.json()),
-      fetch(`/api/dashboard/referrers?days=${currentDays}`).then(r=>r.json()),
-      fetch(`/api/dashboard/leads`).then(r=>r.json()),
-      fetch(`/api/dashboard/recent`).then(r=>r.json()),
+      fetch(`${API_BASE_URL}/api/dashboard/overview?days=${currentDays}`).then(r=>r.json()),
+      fetch(`${API_BASE_URL}/api/dashboard/daily?days=${currentDays}`).then(r=>r.json()),
+      fetch(`${API_BASE_URL}/api/dashboard/pages?days=${currentDays}`).then(r=>r.json()),
+      fetch(`${API_BASE_URL}/api/dashboard/referrers?days=${currentDays}`).then(r=>r.json()),
+      fetch(`${API_BASE_URL}/api/dashboard/leads`).then(r=>r.json()),
+      fetch(`${API_BASE_URL}/api/dashboard/recent`).then(r=>r.json()),
     ]);
 
     renderKPIs(overview);
