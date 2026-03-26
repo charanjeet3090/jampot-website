@@ -141,6 +141,8 @@ document.addEventListener('keydown', e => {
    3. VISITOR TRACKING & EMAIL CAPTURE
    ════════════════════════════════════════════════════════════════════════════ */
 
+const API_BASE_URL = 'https://jampot-website-production.up.railway.app';
+
 const Tracker = (() => {
   const SESSION_KEY = 'jpt_session';
   const EMAIL_SHOWN_KEY = 'jpt_email_shown';
@@ -181,7 +183,7 @@ const Tracker = (() => {
     // Only send if user has given consent (or if it's the initial session ping)
     if (endpoint !== '/api/session' && !hasConsent()) return;
     try {
-      await fetch(endpoint, {
+      await fetch(API_BASE_URL + endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -330,7 +332,7 @@ async function submitEmailCapture() {
   }
 
   try {
-    await fetch('/api/lead', {
+    await fetch(API_BASE_URL + '/api/lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
