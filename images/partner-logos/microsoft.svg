@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" width="160" height="40">
+  <!-- Microsoft four-square logo -->
+  <rect x="8"  y="8"  width="11" height="11" fill="#f25022"/>
+  <rect x="21" y="8"  width="11" height="11" fill="#7fba00"/>
+  <rect x="8"  y="21" width="11" height="11" fill="#00a4ef"/>
+  <rect x="21" y="21" width="11" height="11" fill="#ffb900"/>
+  <!-- Wordmark -->
+  <text x="40" y="26" font-family="'Segoe UI',Arial,sans-serif" font-size="14" font-weight="600" fill="#737373" letter-spacing="0.2">Microsoft</text>
+</svg>
